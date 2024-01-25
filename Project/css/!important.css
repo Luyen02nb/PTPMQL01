@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#myid {
+  background-color: blue;
+}
+
+.myclass {
+  background-color: gray;
+}
+
+p {
+  background-color: red !important;
+}
+</style>
+</head>
+<body>
+
+<p>Đinh Đức Luyện-2021050416</p>
+
+<p class="myclass">Đinh Đức Luyện-2021050416</p>
+
+<p id="myid">Đinh Đức Luyện-2021050416</p>
+
+</body>
+</html>
+
+
