@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BTPTPMQL\\MVC\\MVC.csproj": {}
+    "D:\\PTPMQL\\MVC\\MVC.csproj": {}
   },
   "projects": {
-    "D:\\BTPTPMQL\\MVC\\MVC.csproj": {
+    "D:\\PTPMQL\\MVC\\MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BTPTPMQL\\MVC\\MVC.csproj",
+        "projectUniqueName": "D:\\PTPMQL\\MVC\\MVC.csproj",
         "projectName": "MVC",
-        "projectPath": "D:\\BTPTPMQL\\MVC\\MVC.csproj",
+        "projectPath": "D:\\PTPMQL\\MVC\\MVC.csproj",
         "packagesPath": "C:\\Users\\DUC LUYEN\\.nuget\\packages\\",
-        "outputPath": "D:\\BTPTPMQL\\MVC\\obj\\",
+        "outputPath": "D:\\PTPMQL\\MVC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DUC LUYEN\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,6 +38,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.1.2, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
