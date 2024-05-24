@@ -123,6 +123,40 @@ namespace Mvc.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+    public async Task<IActionResult> Upload()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+       public async Task<IActionResult> Upload(IFormFile file)
+{
+    if (file != null)
+    {
+        string fileExtension = Path.GetExtension(file.FileName);
+        if (fileExtension != ".xls" && fileExtension != ".xlsx")
+        {
+            ModelState.AddModelError("", "Please choose excel file to upload!");
+        }
+        else
+        {
+            // Rename file when upload to server
+            var fileName = DateTime.Now.ToShortTimeString() + fileExtension;
+            var filePath = Path.Combine(Directory.GetCurrentDirectory() + "/Uploads/Excels", fileName);
+
+            var fileLocation = new FileInfo(filePath).ToString();
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                // Save file to server
+                await file.CopyToAsync(stream);
+            }
+        }
+    }
+
+    // ...
+}
+
         private bool PersonExists(string id)
         {
             return (_context.Person?.Any(e => e.PersonId ==id)).GetValueOrDefault();
