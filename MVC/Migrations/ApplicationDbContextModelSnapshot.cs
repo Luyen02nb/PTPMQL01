@@ -14,7 +14,23 @@ namespace MVC.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
+
+            modelBuilder.Entity("MVC.Models.Employee", b =>
+                {
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("EmployeeId");
+
+                    b.ToTable("Employee");
+                });
 
             modelBuilder.Entity("MVC.Models.Person", b =>
                 {

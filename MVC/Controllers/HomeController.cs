@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 
-namespace FirstMVC.Controllers;
+namespace MVC.Controllers;
 
 public class HomeController : Controller
 {
@@ -16,6 +16,14 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         return View();
+    }
+    
+    [HttpPost]
+    public IActionResult Index(string FullName, string Address)
+    {
+         string str0utput = "Xin chào:" + FullName + "đến từ" + Address;
+            ViewBag.ThongTin=str0utput;
+            return View();
     }
 
     public IActionResult Privacy()
