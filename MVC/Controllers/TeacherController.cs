@@ -10,22 +10,22 @@ using MVC.Models;
 
 namespace MVC.Controllers
 {
-    public class CustomerController : Controller
+    public class TeacherController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CustomerController(ApplicationDbContext context)
+        public TeacherController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Customer
+        // GET: Teacher
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Customer.ToListAsync());
+            return View(await _context.Teacher.ToListAsync());
         }
 
-        // GET: Customer/Details/5
+        // GET: Teacher/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.CustomerID == id);
-            if (customer == null)
+            var teacher = await _context.Teacher
+                .FirstOrDefaultAsync(m => m.TeacherId == id);
+            if (teacher == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(teacher);
         }
 
-        // GET: Customer/Create
+        // GET: Teacher/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customer/Create
+        // POST: Teacher/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerID,FullName")] Customer customer)
+        public async Task<IActionResult> Create([Bind("TeacherId,FullName,Address")] Teacher teacher)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(teacher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(teacher);
         }
 
-        // GET: Customer/Edit/5
+        // GET: Teacher/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customer.FindAsync(id);
-            if (customer == null)
+            var teacher = await _context.Teacher.FindAsync(id);
+            if (teacher == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(teacher);
         }
 
-        // POST: Customer/Edit/5
+        // POST: Teacher/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CustomerID,FullName")] Customer customer)
+        public async Task<IActionResult> Edit(string id, [Bind("TeacherId,FullName,Address")] Teacher teacher)
         {
-            if (id != customer.CustomerID)
+            if (id != teacher.TeacherId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace MVC.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(teacher);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.CustomerID))
+                    if (!TeacherExists(teacher.TeacherId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(teacher);
         }
 
-        // GET: Customer/Delete/5
+        // GET: Teacher/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.CustomerID == id);
-            if (customer == null)
+            var teacher = await _context.Teacher
+                .FirstOrDefaultAsync(m => m.TeacherId == id);
+            if (teacher == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(teacher);
         }
 
-        // POST: Customer/Delete/5
+        // POST: Teacher/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var customer = await _context.Customer.FindAsync(id);
-            if (customer != null)
+            var teacher = await _context.Teacher.FindAsync(id);
+            if (teacher != null)
             {
-                _context.Customer.Remove(customer);
+                _context.Teacher.Remove(teacher);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(string id)
+        private bool TeacherExists(string id)
         {
-            return _context.Customer.Any(e => e.CustomerID == id);
+            return _context.Teacher.Any(e => e.TeacherId == id);
         }
     }
 }

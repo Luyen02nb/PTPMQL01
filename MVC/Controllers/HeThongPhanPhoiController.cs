@@ -12,9 +12,9 @@ namespace MVC.Controllers
 {
     public class HeThongPhanPhoiController : Controller
     {
-        private readonly ApplicationDbcontext _context;
+        private readonly ApplicationDbContext _context;
 
-        public HeThongPhanPhoiController(ApplicationDbcontext context)
+        public HeThongPhanPhoiController(ApplicationDbContext context)
         {
             _context = context;
         }

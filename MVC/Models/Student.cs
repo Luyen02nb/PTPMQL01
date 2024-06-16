@@ -1,16 +1,14 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Security.AccessControl;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace MVC.Models
 {
-     [Table("Students")]
+     [Table("Student")]
      public class Student  {
        [Key]
-       public string StudentID { get; set; } 
+       public string StudentID{ get; set; } 
        public string FullName { get; set; }
         
-        
-       
 
      }     
 

@@ -7,31 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Models;
-using MVC.Models.Process;
-using OfficeOpenXml;
 
 namespace MVC.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly ApplicationDbcontext _context;
+        private readonly ApplicationDbContext _context;
 
-        public StudentController(ApplicationDbcontext context)
+        public StudentController(ApplicationDbContext context)
         {
             _context = context;
         }
-        private ExcelProcess _excelPro = new ExcelProcess();
 
         // GET: Student
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
-        }
-        
-        [HttpPost]
-        public async Task<IActionResult> Index(string tuKhoa)
-        {
-            return View(await _context.Students.Where(s => s.FullName.Contains(tuKhoa)).ToListAsync());
+            return View(await _context.Student.ToListAsync());
         }
 
         // GET: Student/Details/5
@@ -42,7 +33,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var student = await _context.Student
                 .FirstOrDefaultAsync(m => m.StudentID == id);
             if (student == null)
             {
@@ -82,7 +73,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
+            var student = await _context.Student.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -133,7 +124,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var student = await _context.Student
                 .FirstOrDefaultAsync(m => m.StudentID == id);
             if (student == null)
             {
@@ -148,81 +139,19 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var student = await _context.Students.FindAsync(id);
+            var student = await _context.Student.FindAsync(id);
             if (student != null)
             {
-                _context.Students.Remove(student);
+                _context.Student.Remove(student);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        
-        public async Task<IActionResult> Upload()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upload(IFormFile file)
-        {
-            if (file!=null)
-                {
-                    string fileExtension = Path.GetExtension(file.FileName);
-                    if (fileExtension != ".xls" && fileExtension != ".xlsx")
-                    {
-                        ModelState.AddModelError("", "Please choose excel file to upload!");
-                    }
-                    else
-                    {
-                        //rename file when upload to server
-                        var fileName = DateTime.Now.ToShortTimeString() + fileExtension;
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory() + "/Upload/Excels", fileName );
-                        var fileLocation = new FileInfo(filePath).ToString();
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                //save file to server
-                                await file.CopyToAsync(stream);
-                                //read data from file and write to database
-                                var dt = _excelPro.ExcelToDataTable(fileLocation);
-                                for(int i = 0; i < dt.Rows.Count; i++)
-                                {
-                                    var std = new Student();
-                                    std.StudentID = dt.Rows[i][0].ToString();
-                                    std.FullName = dt.Rows[i][1].ToString();                              
-
-                                    _context.Add(std);
-                                }
-                                await _context.SaveChangesAsync();
-                                return RedirectToAction(nameof(Index));
-                            }
-                        
-                    }
-                }
-            return View ();
-        }
-        public IActionResult Download()
-        {
-            var fileName = "StudentList.xlsx";
-            using(ExcelPackage excelPackage = new ExcelPackage())
-            {
-                ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets.Add("Sheet 1");
-                excelWorksheet.Cells["A1"].Value = "StudentID";
-                excelWorksheet.Cells["B1"].Value = "FullName";
-                var stdList = _context.Students.ToList();
-                excelWorksheet.Cells["A2"].LoadFromCollection(stdList);
-                var stream = new MemoryStream(excelPackage.GetAsByteArray());
-                return File(stream,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",fileName);
-            }          
-        }  
 
         private bool StudentExists(string id)
-            {
-                return _context.Students.Any(e => e.StudentID == id);
-            }
-    }
-
-    internal class std
-    {
+        {
+            return _context.Student.Any(e => e.StudentID == id);
+        }
     }
 }
