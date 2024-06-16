@@ -15,6 +15,7 @@ namespace MVC.Data
         public DbSet<MVC.Models.Teacher> Teacher { get; set; } = default!;
         public DbSet<MVC.Models.Customer> Customer { get; set; } = default!;
         public DbSet<MVC.Models.HeThongPhanPhoi> HeThongPhanPhoi { get; set; } = default!;
+        public DbSet<MVC.Models.DaiLy> DaiLy { get; set; } = default!;
 
         
        

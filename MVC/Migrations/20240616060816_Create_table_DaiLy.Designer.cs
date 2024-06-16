@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240616051601_Create_table_Daily")]
-    partial class Create_table_Daily
+    [Migration("20240616060816_Create_table_DaiLy")]
+    partial class Create_table_DaiLy
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,36 @@ namespace MVC.Migrations
                     b.HasKey("CustomerID");
 
                     b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("MVC.Models.DaiLy", b =>
+                {
+                    b.Property<string>("MaDaiLy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DiaChi")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DienThoai")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MaHTPP")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NguoiDaiDien")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TenDaiLy")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("MaDaiLy");
+
+                    b.HasIndex("MaHTPP");
+
+                    b.ToTable("DaiLy");
                 });
 
             modelBuilder.Entity("MVC.Models.Employee", b =>
@@ -106,6 +136,15 @@ namespace MVC.Migrations
                     b.HasKey("TeacherId");
 
                     b.ToTable("Teacher");
+                });
+
+            modelBuilder.Entity("MVC.Models.DaiLy", b =>
+                {
+                    b.HasOne("MVC.Models.HeThongPhanPhoi", "HeThongPhanPhoi")
+                        .WithMany()
+                        .HasForeignKey("MaHTPP");
+
+                    b.Navigation("HeThongPhanPhoi");
                 });
 #pragma warning restore 612, 618
         }

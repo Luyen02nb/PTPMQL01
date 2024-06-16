@@ -29,6 +29,36 @@ namespace MVC.Migrations
                     b.ToTable("Customer");
                 });
 
+            modelBuilder.Entity("MVC.Models.DaiLy", b =>
+                {
+                    b.Property<string>("MaDaiLy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DiaChi")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DienThoai")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MaHTPP")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NguoiDaiDien")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TenDaiLy")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("MaDaiLy");
+
+                    b.HasIndex("MaHTPP");
+
+                    b.ToTable("DaiLy");
+                });
+
             modelBuilder.Entity("MVC.Models.Employee", b =>
                 {
                     b.Property<string>("EmployeeId")
@@ -103,6 +133,15 @@ namespace MVC.Migrations
                     b.HasKey("TeacherId");
 
                     b.ToTable("Teacher");
+                });
+
+            modelBuilder.Entity("MVC.Models.DaiLy", b =>
+                {
+                    b.HasOne("MVC.Models.HeThongPhanPhoi", "HeThongPhanPhoi")
+                        .WithMany()
+                        .HasForeignKey("MaHTPP");
+
+                    b.Navigation("HeThongPhanPhoi");
                 });
 #pragma warning restore 612, 618
         }
